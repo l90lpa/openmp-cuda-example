@@ -1,0 +1,19 @@
+{
+    "name": "ubuntu-22.04-cuda-12.5",
+    "image": "nvidia/cuda:12.5.0-devel-ubuntu22.04",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "false",
+            "username": "vscode",
+            "userUid": "1000",
+            "userGid": "1000"
+            // "upgradePackages": "false"
+        },
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "os-provided",
+            "ppa": "false"
+        }
+    },
+    "remoteUser": "vscode",
+    "runArgs": ["--gpus", "all"]
+}
