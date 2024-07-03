@@ -1,0 +1,13 @@
+# CUDA_PATH = /usr/local/cuda
+CUDA_PATH = /opt/nvidia/hpc_sdk/Linux_x86_64/24.3/cuda/12.3
+
+all: omp-kernel-omp-mem.exe omp-kernel-cuda-mem.exe
+
+omp-kernel-omp-mem.exe: omp-kernel-omp-mem.cpp
+	nvc++ -mp=gpu -Minfo=mp -std=c++17 -o omp-kernel-omp-mem.exe omp-kernel-omp-mem.cpp
+
+omp-kernel-cuda-mem.exe: omp-kernel-cuda-mem.cpp
+	nvc++ -I$(CUDA_PATH)/include -mp=gpu -Minfo=mp -std=c++17 -o omp-kernel-cuda-mem.exe omp-kernel-cuda-mem.cpp -L$(CUDA_PATH)/lib64 -lcudart
+
+clean:
+	rm -f *.exe

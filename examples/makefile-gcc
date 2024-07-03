@@ -1,0 +1,15 @@
+CUDA_PATH = /usr/local/cuda
+# CUDA_PATH = /opt/nvidia/hpc_sdk/Linux_x86_64/24.3/cuda/12.3
+
+CXX = g++-11
+
+all: omp-kernel-omp-mem.exe omp-kernel-cuda-mem.exe
+
+omp-kernel-omp-mem.exe: omp-kernel-omp-mem.cpp
+	$(CXX) -fopenmp -foffload=nvptx-none -fcf-protection=none -fno-stack-protector -no-pie -std=c++17 -o omp-kernel-omp-mem.exe omp-kernel-omp-mem.cpp
+
+omp-kernel-cuda-mem.exe: omp-kernel-cuda-mem.cpp
+	$(CXX) -I$(CUDA_PATH)/include -fopenmp -foffload=nvptx-none -fcf-protection=none -fno-stack-protector -std=c++17 -o omp-kernel-cuda-mem.exe omp-kernel-cuda-mem.cpp  -L$(CUDA_PATH)/lib64 -lcudart
+
+clean:
+	rm -f *.exe
